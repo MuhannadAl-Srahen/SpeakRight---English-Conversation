@@ -1,0 +1,7 @@
+{
+  "name": "english chat bot",
+  "description": "An immersive and interactive application for practicing English through real-time AI conversation and contextual virtual environments, helping users improve their language skills dynamically.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
