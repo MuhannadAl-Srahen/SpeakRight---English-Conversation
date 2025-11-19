@@ -52,6 +52,24 @@ export const ConversationDisplay: React.FC<ConversationDisplayProps> = ({ conver
             <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
               <div className={`px-4 py-3 rounded-2xl max-w-2xl shadow-lg ${msg.sender === 'user' ? 'bg-gradient-to-br from-indigo-600 to-indigo-700 ml-8' : 'bg-gradient-to-br from-[#1e293b] to-[#2B3855] mr-8'}`}>
                 <p dir="auto" className="text-gray-100 text-base leading-relaxed">{msg.text}</p>
+                
+                {/* Show correction if different from original */}
+                {msg.sender === 'user' && msg.correction && msg.correction !== msg.text && (
+                  <div className="mt-3 pt-3 border-t border-emerald-500/20">
+                    <p className="text-xs text-emerald-300 font-medium mb-1">✅ Corrected:</p>
+                    <p dir="auto" className="text-sm text-emerald-200">{msg.correction}</p>
+                  </div>
+                )}
+                
+                {/* Show Arabic translation for user messages */}
+                {msg.sender === 'user' && msg.arabicTranslation && (
+                  <div className="mt-3 pt-3 border-t border-amber-500/20">
+                    <p className="text-xs text-amber-300 font-medium mb-1">🌍 Arabic Translation:</p>
+                    <p dir="rtl" className="text-sm text-amber-100 font-arabic">{msg.arabicTranslation}</p>
+                  </div>
+                )}
+                
+                {/* Show pronunciation feedback */}
                 {msg.accentFeedback && (
                   <div className="mt-3 pt-3 border-t border-sky-500/20">
                     <p dir="auto" className="text-sm text-sky-300 font-medium">
@@ -59,6 +77,8 @@ export const ConversationDisplay: React.FC<ConversationDisplayProps> = ({ conver
                     </p>
                   </div>
                 )}
+                
+                {/* Show encouragement */}
                 {msg.encouragement && !isVirtualWorld && (
                   <p dir="auto" className="mt-2 text-sm text-emerald-300 italic">
                     ✨ "{msg.encouragement}"

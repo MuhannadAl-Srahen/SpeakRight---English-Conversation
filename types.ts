@@ -16,6 +16,7 @@ export interface Message {
   accentFeedback?: string;
   encouragement?: string;
   promptToRead?: string;
+  arabicTranslation?: string;
 }
 
 export interface TrainingLog {

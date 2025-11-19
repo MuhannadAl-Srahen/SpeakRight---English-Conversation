@@ -25,7 +25,12 @@ export function useAudioSession({
   const isMutedRef = useRef(false);
   const currentInputTranscriptionRef = useRef('');
   const currentOutputTranscriptionRef = useRef('');
-  const pendingGeneralFeedbackRef = useRef<{ accentFeedback?: string; encouragement?: string; } | null>(null);
+  const pendingGeneralFeedbackRef = useRef<{ 
+    correction?: string; 
+    accentFeedback?: string; 
+    arabicTranslation?: string;
+    encouragement?: string; 
+  } | null>(null);
   const pendingVirtualWorldMessageRef = useRef<Message | null>(null);
   const conversationRef = useRef<Message[]>([]);
 
@@ -65,7 +70,7 @@ export function useAudioSession({
           inputAudioTranscription: {},
           outputAudioTranscription: {},
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } } },
-          tools: !isVirtualWorld ? [{ functionDeclarations: [provideAccentFeedbackFunctionDeclaration] }] : undefined,
+          tools: [{ functionDeclarations: [provideAccentFeedbackFunctionDeclaration] }],
         },
         callbacks: {
           onopen: () => {
@@ -125,18 +130,12 @@ export function useAudioSession({
             // Handle tool calls
             if (message.toolCall) {
               for (const fc of message.toolCall.functionCalls) {
-                if (isVirtualWorld && fc.name === 'provideSentenceAndFeedback') {
-                  const args = fc.args as any;
-                  pendingVirtualWorldMessageRef.current = {
-                    sender: 'ai',
-                    text: (args.encouragement as string) || '',
-                    accentFeedback: (args.feedback as string) || undefined,
-                    promptToRead: args.sentenceToRead as string,
-                  };
-                } else if (!isVirtualWorld && fc.name === 'provideAccentFeedback') {
+                if (fc.name === 'provideAccentFeedback') {
                   const args = fc.args as any;
                   pendingGeneralFeedbackRef.current = {
+                    correction: (args.correctedText as string) || undefined,
                     accentFeedback: (args.feedback as string) || undefined,
+                    arabicTranslation: (args.arabicTranslation as string) || undefined,
                     encouragement: (args.encouragement as string) || undefined,
                   };
                 }
@@ -159,19 +158,22 @@ export function useAudioSession({
               const aiText = currentOutputTranscriptionRef.current.trim();
               const newMessages: Message[] = [];
 
-              if (userText) newMessages.push({ sender: 'user', text: userText });
+              if (userText) {
+                const userMessage: Message = { sender: 'user', text: userText };
+                
+                // Attach correction and Arabic translation to user message
+                if (pendingGeneralFeedbackRef.current) {
+                  userMessage.correction = pendingGeneralFeedbackRef.current.correction;
+                  userMessage.arabicTranslation = pendingGeneralFeedbackRef.current.arabicTranslation;
+                  userMessage.accentFeedback = pendingGeneralFeedbackRef.current.accentFeedback;
+                  userMessage.encouragement = pendingGeneralFeedbackRef.current.encouragement;
+                }
+                
+                newMessages.push(userMessage);
+              }
 
               if (aiText) {
                 const aiMessage: Message = { sender: 'ai', text: aiText };
-
-                if (isVirtualWorld && pendingVirtualWorldMessageRef.current) {
-                  aiMessage.accentFeedback = pendingVirtualWorldMessageRef.current.accentFeedback;
-                  aiMessage.promptToRead = pendingVirtualWorldMessageRef.current.promptToRead;
-                } else if (!isVirtualWorld && pendingGeneralFeedbackRef.current) {
-                  aiMessage.accentFeedback = pendingGeneralFeedbackRef.current.accentFeedback;
-                  aiMessage.encouragement = pendingGeneralFeedbackRef.current.encouragement;
-                }
-
                 newMessages.push(aiMessage);
               }
 
