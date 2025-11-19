@@ -157,37 +157,37 @@ export const TrainingLogScreen: React.FC<TrainingLogScreenProps> = ({ logs }) =>
   const highestScore = totalSessions > 0 ? Math.max(...logs.map(l => l.score)) : 0;
 
   return (
-    <div className="animate-fade-in space-y-6">
+    <div className="animate-fade-in space-y-4 sm:space-y-6 px-2 sm:px-0">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">📚 Training Log</h1>
-          <p className="text-gray-400">Review your practice sessions and track your progress</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-1 sm:mb-2">📚 Training Log</h1>
+          <p className="text-sm sm:text-base text-gray-400">Review your practice sessions and track your progress</p>
         </div>
       </div>
 
       {/* Stats Cards */}
       {totalSessions > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 rounded-xl p-5 shadow-lg">
-            <div className="text-3xl mb-2">📊</div>
-            <div className="text-2xl font-bold text-white">{totalSessions}</div>
-            <div className="text-sm text-gray-400">Total Sessions</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border border-indigo-500/30 rounded-xl p-3 sm:p-5 shadow-lg">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">📊</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{totalSessions}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Total Sessions</div>
           </div>
-          <div className="bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-500/30 rounded-xl p-5 shadow-lg">
-            <div className="text-3xl mb-2">🎯</div>
-            <div className="text-2xl font-bold text-white">{averageScore}/100</div>
-            <div className="text-sm text-gray-400">Average Score</div>
+          <div className="bg-gradient-to-br from-emerald-600/20 to-teal-600/20 border border-emerald-500/30 rounded-xl p-3 sm:p-5 shadow-lg">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">🎯</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{averageScore}/100</div>
+            <div className="text-xs sm:text-sm text-gray-400">Average Score</div>
           </div>
-          <div className="bg-gradient-to-br from-pink-600/20 to-rose-600/20 border border-pink-500/30 rounded-xl p-5 shadow-lg">
-            <div className="text-3xl mb-2">⭐</div>
-            <div className="text-2xl font-bold text-white">{highestScore}/100</div>
-            <div className="text-sm text-gray-400">Best Score</div>
+          <div className="bg-gradient-to-br from-pink-600/20 to-rose-600/20 border border-pink-500/30 rounded-xl p-3 sm:p-5 shadow-lg">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">⭐</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{highestScore}/100</div>
+            <div className="text-xs sm:text-sm text-gray-400">Best Score</div>
           </div>
-          <div className="bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-5 shadow-lg">
-            <div className="text-3xl mb-2">💬</div>
-            <div className="text-2xl font-bold text-white">{totalMessages}</div>
-            <div className="text-sm text-gray-400">Total Messages</div>
+          <div className="bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border border-blue-500/30 rounded-xl p-3 sm:p-5 shadow-lg">
+            <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">💬</div>
+            <div className="text-xl sm:text-2xl font-bold text-white">{totalMessages}</div>
+            <div className="text-xs sm:text-sm text-gray-400">Total Messages</div>
           </div>
         </div>
       )}

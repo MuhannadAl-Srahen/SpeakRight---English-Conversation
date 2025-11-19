@@ -73,15 +73,15 @@ export const DynamicChallengeScreen: React.FC<DynamicChallengeScreenProps> = ({
   }, [isMutedRef]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] animate-fade-in">
+    <div className="flex flex-col h-[calc(100vh-2rem)] sm:h-[calc(100vh-2rem)] animate-fade-in">
       {/* Top Header Bar */}
-      <div className="flex-shrink-0 bg-gradient-to-r from-[#0f172a] to-[#1e293b] border-b border-indigo-500/20 px-6 py-4 shadow-lg">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">{displayTitle}</h1>
+      <div className="flex-shrink-0 bg-gradient-to-r from-[#0f172a] to-[#1e293b] border-b border-indigo-500/20 px-3 sm:px-6 py-3 sm:py-4 shadow-lg">
+        <div className="flex justify-between items-center gap-2">
+          <h1 className="text-lg sm:text-2xl font-bold text-white truncate">{displayTitle}</h1>
           <button
             onClick={handleEndSession}
             disabled={sessionStatus === 'ended'}
-            className="px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm sm:text-base font-medium rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
           >
             End Session
           </button>
@@ -95,7 +95,7 @@ export const DynamicChallengeScreen: React.FC<DynamicChallengeScreenProps> = ({
 
       {/* Fixed Bottom Controls */}
       <div className="flex-shrink-0 bg-gradient-to-t from-[#0f172a] via-[#1e293b] to-transparent border-t border-indigo-500/10 backdrop-blur-sm">
-        <div className="flex flex-col items-center justify-center py-6 px-4">
+        <div className="flex flex-col items-center justify-center py-4 sm:py-6 px-4">
           <MicrophoneButton
             isMuted={isMuted}
             isAiSpeaking={isAiSpeaking}

@@ -66,7 +66,7 @@ const App: React.FC = () => {
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-[#F8F8F8] min-h-screen flex overflow-hidden">
       {currentScreen !== 'login' && <Sidebar navigateTo={navigateTo} currentScreen={currentScreen} />}
-      <main className={`flex-1 transition-all duration-300 overflow-y-auto ${currentScreen !== 'login' ? 'p-4 sm:p-6 lg:p-8 ml-16 md:ml-72' : ''}`}>
+      <main className={`flex-1 transition-all duration-300 overflow-y-auto ${currentScreen !== 'login' ? 'p-4 sm:p-6 lg:p-8 ml-20 md:ml-72' : ''}`}>
         <div className="max-w-[1600px] mx-auto">
           {renderScreen()}
         </div>

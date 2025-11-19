@@ -9,6 +9,14 @@ body {
   font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none; /* Prevent pull-to-refresh on mobile */
+}
+
+/* Prevent zoom on mobile inputs */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* Animations */
@@ -77,6 +85,13 @@ body {
   background: #5A6578;
 }
 
+/* Mobile scrollbar - hide on small screens */
+@media screen and (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
 /* Custom Utilities */
 .bg-gradient-dark {
   background: linear-gradient(135deg, #1A233A 0%, #141B2D 100%);
@@ -92,4 +107,26 @@ button:focus,
 input:focus {
   outline: 2px solid #FFC107;
   outline-offset: 2px;
+}
+
+/* Better touch targets for mobile */
+@media screen and (max-width: 768px) {
+  button {
+    min-height: 44px; /* Apple's recommended minimum touch target */
+  }
+  
+  /* Disable hover effects on touch devices */
+  @media (hover: none) {
+    button:hover,
+    a:hover {
+      transform: none;
+    }
+  }
+}
+
+/* Safe area padding for mobile notches */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

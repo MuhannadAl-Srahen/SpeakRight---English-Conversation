@@ -22,11 +22,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ navigateTo, currentScreen }) =
     ];
   
     return (
-        <aside className="fixed top-0 left-0 h-full w-16 md:w-72 bg-gradient-to-b from-slate-900 to-slate-950 border-r border-slate-800/50 backdrop-blur-xl flex flex-col py-8 px-3 md:px-6 space-y-8 transition-all duration-300 z-20 shadow-2xl">
+        <aside className="fixed top-0 left-0 h-full w-20 md:w-72 bg-gradient-to-b from-slate-900 to-slate-950 border-r border-slate-800/50 backdrop-blur-xl flex flex-col py-6 px-2 md:py-8 md:px-6 space-y-6 md:space-y-8 transition-all duration-300 z-20 shadow-2xl">
             {/* Logo Section */}
-            <div className="flex items-center justify-center md:justify-start gap-3 px-2">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shrink-0">
-                    <svg className="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center justify-center md:justify-start gap-3 px-1 md:px-2">
+                <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shrink-0">
+                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
                 </div>
@@ -37,25 +37,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ navigateTo, currentScreen }) =
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 flex flex-col gap-2">
+            <nav className="flex-1 flex flex-col gap-3 md:gap-2">
                 {navItems.map(item => (
                     <button
                         key={item.screen}
                         onClick={() => navigateTo(item.screen)}
-                        className={`group relative flex items-center gap-4 w-full py-4 px-4 rounded-xl transition-all duration-300 ${
+                        className={`group relative flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-4 w-full py-3 md:py-4 px-2 md:px-4 rounded-xl transition-all duration-300 ${
                             currentScreen === item.screen
                                 ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-white shadow-lg shadow-amber-500/10'
                                 : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                         }`}
                     >
                         {currentScreen === item.screen && (
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-amber-400 to-orange-500 rounded-r-full"></div>
+                            <div className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-amber-400 to-orange-500 rounded-r-full"></div>
+                        )}
+                        {/* Mobile: Active indicator dot at top */}
+                        {currentScreen === item.screen && (
+                            <div className="md:hidden absolute top-1 w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
                         )}
                         <div className={`shrink-0 transition-transform duration-300 ${
                             currentScreen === item.screen ? 'scale-110' : 'group-hover:scale-110'
                         }`}>
                             {item.icon}
                         </div>
+                        {/* Mobile: Show label below icon */}
+                        <span className="md:hidden text-[10px] font-medium leading-tight text-center">{item.label.split(' ')[0]}</span>
+                        {/* Desktop: Show full label */}
                         <span className="hidden md:inline font-semibold text-base">{item.label}</span>
                         {currentScreen === item.screen && (
                             <div className="hidden md:block absolute right-4 w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
