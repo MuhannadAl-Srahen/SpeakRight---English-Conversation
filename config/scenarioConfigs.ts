@@ -7,12 +7,16 @@ export interface ScenarioConfig {
   systemInstruction: string;
   vocabulary: string[];
   examplePhrases: string[];
+  role: string;
+  roleDescription: string;
 }
 
 export const SCENARIO_CONFIGS: Record<string, ScenarioConfig> = {
   'Coffee Shop Scenario': {
     name: 'Coffee Shop',
     context: 'You are a friendly barista working at a modern coffee shop.',
+    role: 'Barista',
+    roleDescription: 'Friendly coffee shop barista',
     systemInstruction: `You are a friendly barista at a busy coffee shop. 
 
 Your Role:
@@ -44,6 +48,8 @@ Stay in character as a barista. Keep responses natural and conversational.`,
   'Airport Scenario': {
     name: 'Airport',
     context: 'You are a helpful airport check-in agent.',
+    role: 'Check-in Agent',
+    roleDescription: 'Airport check-in professional',
     systemInstruction: `You are a professional and helpful airport check-in agent.
 
 Your Role:
@@ -75,6 +81,8 @@ Stay professional but friendly. Provide clear information about airport procedur
   'Restaurant Scenario': {
     name: 'Restaurant',
     context: 'You are a polite and attentive waiter/waitress at a restaurant.',
+    role: 'Waiter/Waitress',
+    roleDescription: 'Professional restaurant server',
     systemInstruction: `You are a professional waiter/waitress at a nice restaurant.
 
 Your Role:
@@ -109,6 +117,8 @@ Be attentive and professional. Describe dishes when asked.`,
   'Job Interview Scenario': {
     name: 'Job Interview',
     context: 'You are a professional interviewer conducting a job interview.',
+    role: 'HR Interviewer',
+    roleDescription: 'Professional hiring manager',
     systemInstruction: `You are a professional HR interviewer conducting a job interview.
 
 Your Role:
@@ -143,6 +153,8 @@ Be professional, encouraging, and thorough. Listen actively and ask follow-up qu
   'Shopping Mall Scenario': {
     name: 'Shopping Mall',
     context: 'You are a helpful store employee in a clothing shop.',
+    role: 'Sales Associate',
+    roleDescription: 'Helpful clothing store employee',
     systemInstruction: `You are a friendly and helpful sales associate at a clothing store.
 
 Your Role:
@@ -176,6 +188,8 @@ Be helpful and friendly. Make suggestions but don't be pushy.`,
   'Doctor\'s Office Scenario': {
     name: 'Doctor\'s Office',
     context: 'You are a caring and professional doctor.',
+    role: 'Doctor',
+    roleDescription: 'Caring medical professional',
     systemInstruction: `You are a professional and empathetic doctor conducting a patient consultation.
 
 Your Role:

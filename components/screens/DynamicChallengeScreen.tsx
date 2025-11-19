@@ -4,6 +4,7 @@ import { useAudioSession } from '../../hooks/useAudioSession';
 import { ConversationDisplay } from '../chat/ConversationDisplay';
 import { MicrophoneButton } from '../ui/MicrophoneButton';
 import { SessionStatus } from '../ui/SessionStatus';
+import { getScenarioConfig } from '../../config/scenarioConfigs';
 
 interface DynamicChallengeScreenProps {
   onEndSession: (log: TrainingLog) => void;
@@ -25,6 +26,10 @@ export const DynamicChallengeScreen: React.FC<DynamicChallengeScreenProps> = ({
 
   const isEndingSessionRef = useRef(false);
   const isVirtualWorld = context && context !== 'General Conversation';
+  
+  // Extract clean scenario name
+  const scenarioConfig = context ? getScenarioConfig(context) : null;
+  const displayTitle = scenarioConfig ? scenarioConfig.name : (context || 'Dynamic Challenge');
 
   // Audio session hook
   const { sessionPromiseRef, isMutedRef } = useAudioSession({
@@ -68,36 +73,42 @@ export const DynamicChallengeScreen: React.FC<DynamicChallengeScreenProps> = ({
   }, [isMutedRef]);
 
   return (
-    <div className="flex flex-col h-full max-h-[calc(100vh-4rem)] animate-fade-in">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4 flex-shrink-0">
-        <h1 className="text-2xl font-bold">{context || 'Dynamic Challenge'}</h1>
-        <button
-          onClick={handleEndSession}
-          disabled={sessionStatus === 'ended'}
-          className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors disabled:bg-gray-500"
-        >
-          End Session
-        </button>
+    <div className="flex flex-col h-[calc(100vh-2rem)] animate-fade-in">
+      {/* Top Header Bar */}
+      <div className="flex-shrink-0 bg-gradient-to-r from-[#0f172a] to-[#1e293b] border-b border-indigo-500/20 px-6 py-4 shadow-lg">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-white">{displayTitle}</h1>
+          <button
+            onClick={handleEndSession}
+            disabled={sessionStatus === 'ended'}
+            className="px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            End Session
+          </button>
+        </div>
       </div>
 
-      {/* Conversation Area */}
-      <ConversationDisplay conversation={conversation} isVirtualWorld={isVirtualWorld} />
+      {/* Main Content Area - Scrollable Chat */}
+      <div className="flex-1 overflow-hidden">
+        <ConversationDisplay conversation={conversation} isVirtualWorld={isVirtualWorld} context={context} />
+      </div>
 
-      {/* Microphone Controls */}
-      <div className="flex flex-col items-center justify-center pt-4 flex-shrink-0">
-        <MicrophoneButton
-          isMuted={isMuted}
-          isAiSpeaking={isAiSpeaking}
-          sessionStatus={sessionStatus}
-          onToggleMute={toggleMute}
-        />
-        <SessionStatus
-          sessionStatus={sessionStatus}
-          micError={micError}
-          isAiSpeaking={isAiSpeaking}
-          isMuted={isMuted}
-        />
+      {/* Fixed Bottom Controls */}
+      <div className="flex-shrink-0 bg-gradient-to-t from-[#0f172a] via-[#1e293b] to-transparent border-t border-indigo-500/10 backdrop-blur-sm">
+        <div className="flex flex-col items-center justify-center py-6 px-4">
+          <MicrophoneButton
+            isMuted={isMuted}
+            isAiSpeaking={isAiSpeaking}
+            sessionStatus={sessionStatus}
+            onToggleMute={toggleMute}
+          />
+          <SessionStatus
+            sessionStatus={sessionStatus}
+            micError={micError}
+            isAiSpeaking={isAiSpeaking}
+            isMuted={isMuted}
+          />
+        </div>
       </div>
     </div>
   );

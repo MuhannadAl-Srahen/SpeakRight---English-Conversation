@@ -30,7 +30,7 @@ export const MicrophoneButton: React.FC<MicrophoneButtonProps> = ({
     <button
       onClick={onToggleMute}
       disabled={sessionStatus !== 'connected'}
-      className="relative flex items-center justify-center w-28 h-28 cursor-pointer disabled:cursor-not-allowed group"
+      className="relative flex items-center justify-center w-24 h-24 cursor-pointer disabled:cursor-not-allowed group transition-transform hover:scale-105 active:scale-95"
       aria-label={isMuted ? "Unmute microphone" : "Mute microphone"}
     >
       {isAiSpeaking && (
@@ -45,7 +45,7 @@ export const MicrophoneButton: React.FC<MicrophoneButtonProps> = ({
           <div className="absolute h-full w-full rounded-full bg-red-500/50 animate-pulse-ring" style={{ animationDelay: '1s' }}></div>
         </>
       )}
-      <div className="relative p-4 bg-[#2B3855] rounded-full z-10 transition-colors group-hover:bg-[#394a6c]">
+      <div className="relative p-5 bg-gradient-to-br from-[#1e293b] to-[#2B3855] rounded-full z-10 transition-all shadow-xl group-hover:shadow-2xl group-hover:from-[#2B3855] group-hover:to-[#394a6c] ring-2 ring-indigo-500/20">
         {isMuted ? <MicMutedIcon /> : <MicIcon listening={sessionStatus === 'connected' && !isAiSpeaking} />}
       </div>
     </button>
