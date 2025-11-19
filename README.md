@@ -39,14 +39,15 @@ An AI-powered English conversation practice app with real-time voice interaction
    ```
 
 3. **Configure API Key**:
-   
+
    - Copy `.env.example` to `.env.local`:
+
      ```bash
      cp .env.example .env.local
      ```
-   
+
    - Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-   
+
    - Update `.env.local` with your API key:
      ```
      VITE_GEMINI_API_KEY=your_actual_api_key_here
@@ -58,10 +59,10 @@ An AI-powered English conversation practice app with real-time voice interaction
    npm run dev
    ```
 
-4. **Open your browser**:
+5. **Open your browser**:
    Navigate to `http://localhost:5173/`
 
-5. **Allow Microphone Access**:
+6. **Allow Microphone Access**:
    When prompted, allow the browser to access your microphone for voice features to work.
 
 ## 🎮 How to Use
